@@ -1,0 +1,68 @@
+# oso-code rubric
+
+Shared quality bar for `quality-pass` and `debt-sweep`. Derived from clean-code-standards (gentleman-programming, Apache-2.0). Apply to touched code only — never untouched files.
+
+## Judgment contract — read first, it overrides every rule below
+
+The rubric serves readability; readability never serves the rubric.
+
+- Every finding must state the concrete readability win of its fix. A finding justified only by "the rule says so" is not a finding — drop it.
+- If applying a rule makes the code harder to read, do not apply it, and record why in the report.
+- Verify before flagging: read the surrounding code and confirm the "violation" is not already the clearest available shape.
+- Soft triggers, never gates: more than 3–4 positional parameters, a function past roughly 40 lines, or nesting past 3 levels demands a written justification in the report — the justification may win, but it must be written.
+- The idioms below are named in TS/JS terms as examples; apply the host language's equivalent (sum types, enums-with-data, the language's standard doc-comment form) and never flag code for lacking a construct the language does not have. Where public-API doc comments are the language convention (Python docstrings, Rust doc comments), the over-documentation rule targets redundant inline comments, not conventional API docs.
+- Four rules stand outside this contract — the three Hard blockers below and the inline-comment debt class under Debt markers — and they outrank the conventions of the repo under judgment as well. A codebase whose existing pattern violates one of the four does not soften it: the pattern is evidence about that repo, never a standing exception, and the conflict is a QUESTION for the operator — never a decision an author, a judge or an orchestrator takes downstream. The doc-form carve-out above is no instance of a convention winning: the debt class grants it, so it holds wherever that class does and nowhere a repo's own habit puts it.
+
+## Hard blockers — any one fails the gate; the judgment contract cannot override these
+
+- A hardcoded secret, credential, token, or private key.
+- An error swallowed silently or replaced by a generic catch-all that loses the cause.
+- A new abstraction (wrapper, factory, registry, config object) with fewer than two real callers or implementations, unless a frozen ledger decision explicitly names that abstraction. A writer wiring up its own single caller does not clear this.
+
+## File level — check every touched file
+
+- Names carry domain intent and read without opening the body; no vague generics (`data`, `item`, `handler`, `utils`) and no type-echo noise words.
+- Files read top-down (step-down): high-level function first as a table of contents, steps below in call order, one abstraction level per function.
+- Single responsibility: a function does one thing at one abstraction level; a module has one reason to change — if its purpose can't be named without "and", it is two things.
+- Guard clauses over nested decisions; control flow stays flat — never a pyramid.
+- No magic values: behavior-changing literals are named once, at the narrowest scope that covers all their uses. Over-extraction is a violation too:
+  - Only behavior-changing literals earn a name — never one-use or self-evident values.
+  - A constant lives next to its use; a pile of constants hoisted to the top of the file "for order" is the violation, not the fix.
+  - Compose constants from existing ones (`` `${API_BASE}/users` ``) instead of repeating a value fragment across several.
+  - Before creating a constant, search for an existing one with the same value and meaning — reuse it or compose from it.
+  - Contrastive example (over-extraction):
+    - Before: `const ZERO = 0; const ONE = 1; return items.slice(ZERO, ONE)` — self-evident values given ceremonial names.
+    - After: `return items.slice(0, 1)` — the literals read plainly; no name earns its keep.
+    - Before (earns a name): `if (retries > 3) abort()` repeated in five call sites.
+    - After: `const MAX_RETRIES = 3` next to its first use — behavior-changing, repeated, so the name pays off.
+- Prefer the language's modern idioms when they read better: optional chaining, nullish coalescing, spread/rest, destructuring, and array methods over manual loops and if-ladders. Guard clauses flatten control flow — they are not a mandate to expand a clear expression into a chain of ifs.
+- No long positional parameter lists; use a parameter object, and model data clumps as named types.
+- Illegal states are unrepresentable: mutually exclusive variants are discriminated unions, not boolean flags or optional fields.
+- A little duplication beats a speculative abstraction: extract only a proven, stable shared seam; no wrappers, factories, or config objects without a current caller.
+- Errors are specific and visible — never swallowed, never generic, never an ambiguous sentinel that collides with valid values.
+- Business rules stay pure (data in, decision out, no IO); IO lives at the edges and the dependency points inward.
+
+## System level — check the change as a whole
+
+- No cross-file duplication introduced by the change: the same rule, helper, or mapping written twice in different files.
+- Dependency direction holds: domain code never imports infrastructure, UI, or framework glue.
+- Primitives are reused: the change uses existing helpers, error types, shared types, and existing constants instead of recreating them — no two constants with the same value and meaning across the change.
+- No god-module growth: no file quietly absorbed responsibilities that belong elsewhere.
+- One style per concern: the change follows the codebase's existing pattern for a concern instead of introducing a competing one.
+- Logic lives in its layer: validation, normalization, and calculation helpers belong to the domain layer — not scattered through UI or component folders.
+
+## Debt markers — none may remain
+
+- Dead code: unused imports or exports, unreachable branches, commented-out blocks.
+- Leftover debug output, temporary flags, or stray TODOs without an owner.
+- Over-documentation. The inline comment is a debt CLASS, with the scoped generated-output rule below as its only additional exception — every other one is debt, and the judgment contract cannot override this. Zero is the default and the ceiling: naming and structure carry the meaning, no density threshold makes an inline comment acceptable, and no external constraint earns one. Only the language's standard public-API doc form and a verified builder-inserted annotation in a registered generated output stand outside it:
+  - The comment scanner reports hits in outputs registered by the one shared builder output list separately as candidates. Exact regeneration evidence must show that a candidate is a builder-inserted annotation before it can stand. Source-authored comments remain debt when copied into a registered output, and unregistered or manually edited outputs receive no exemption.
+  - JSDoc is the exception, not a habit: only on code whose behavior or contract cannot be made obvious from names and types alone (non-trivial algorithms, surprising edge semantics like float rounding, external or legal constraints).
+  - When JSDoc is earned, use the standard shape: one-line description, then `@param`/`@returns` only where they add meaning beyond the types (units, ranges, invariants).
+  - A why-shaped sentence over self-evident code is still a WHAT comment — dressing noise as rationale does not save it. If a one-line function needs a comment, fix the name instead.
+  - Contrastive example (WHAT dressed as WHY):
+    - Before: `// increment the counter by one` above `counter += 1` — restates the code.
+    - Also before: `// we increment here so the total stays in sync` — why-shaped, but the sync is already obvious from context; still noise.
+    - After: no comment; the statement speaks for itself.
+    - Still debt: `// D22: retries cap at 3` above `const MAX_RETRIES = 3` — a decision, ticket, or process citation is external to the code and unshowable by it, and debt regardless. Provenance belongs in the change's ledger, the PR body, or the commit message, never in the source.
+  - Scarcity check: if most exports in a file carry JSDoc, that is over-documentation and a violation in itself.

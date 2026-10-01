@@ -1,0 +1,9 @@
+OsoCode for Codex
+Derived from OsoCode by Osoria Tech / SoyJohnXD.
+Upstream: https://github.com/SoyJohnXD/oso-code
+License: Apache License, Version 2.0 (see LICENSE).
+
+This Codex-only derivative replaces the multihost execution, installation and
+runtime surface. The original project's history remains in its upstream repo.
+The code-quality rubric retains its upstream attribution to
+clean-code-standards (gentleman-programming, Apache-2.0).

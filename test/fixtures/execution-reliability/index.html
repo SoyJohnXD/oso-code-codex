@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Oso Visual Acceptance</title>
+<style>body{margin:0;padding:20px;background:#edf1f5;color:#16232e;font:16px system-ui}nav{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px}button{padding:10px 16px;border:1px solid #61758b;border-radius:7px;background:white;color:#16232e;cursor:pointer}iframe{display:block;border:1px solid #adbbc8;background:white;height:740px}output{font-size:14px}</style>
+</head><body><nav><strong>Visual acceptance fixture</strong><button id="desktop">Desktop 1100 px</button><button id="mobile">Mobile 360 px</button><output id="viewport">Viewport: 1100 × 740</output></nav>
+<iframe id="preview" title="Label normalizer preview" width="1100" height="740"></iframe>
+<script type="module">
+const preview = document.getElementById('preview');
+preview.src = 'app.html' + location.search;
+for (const [id, width] of [['desktop', 1100], ['mobile', 360]]) {
+  document.getElementById(id).addEventListener('click', () => {
+    preview.width = String(width);
+    document.getElementById('viewport').textContent = 'Viewport: ' + width + ' × 740';
+  });
+}
+</script></body></html>

@@ -1,0 +1,8 @@
+{
+  "name": "oso-native-labels-fixture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test-isolation=none --test labels.test.mjs"
+  }
+}

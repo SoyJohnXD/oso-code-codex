@@ -1,0 +1,5 @@
+interface:
+  display_name: "OsoCode quick"
+  short_description: "Use the OsoCode quick workflow in Codex"
+policy:
+  allow_implicit_invocation: false

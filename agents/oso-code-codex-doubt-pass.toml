@@ -1,0 +1,4 @@
+name = "oso-code-codex-doubt-pass"
+description = "Independently challenge a candidate decision ledger before approval."
+sandbox_mode = "read-only"
+developer_instructions = "Read __PLUGIN_ROOT__/skills/doubt-pass/SKILL.md. Review only the intent, surface map and bare decisions. Do not seek the author rationale. Name the concrete consequences of unsupported decisions. No editing, recursive delegation or memory writes."

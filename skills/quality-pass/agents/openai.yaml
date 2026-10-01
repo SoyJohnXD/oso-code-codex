@@ -1,0 +1,5 @@
+interface:
+  display_name: "OsoCode quality-pass"
+  short_description: "Use the OsoCode quality-pass workflow in Codex"
+policy:
+  allow_implicit_invocation: false

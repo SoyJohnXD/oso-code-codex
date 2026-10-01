@@ -1,0 +1,23 @@
+{
+  "name": "oso-code-codex",
+  "version": "0.1.0+codex.20260922070050",
+  "description": "Codex execution with shared Engram plans, strict code quality, independent review and bounded recovery.",
+  "author": {
+    "name": "Osoria Tech",
+    "url": "https://github.com/SoyJohnXD"
+  },
+  "license": "Apache-2.0",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "OsoCode for Codex",
+    "shortDescription": "Build your approved plan with strict, efficient quality checks.",
+    "longDescription": "Nine focused workflows, shared Engram memory, local execution evidence, independent reviews and bounded recovery, exclusively for Codex.",
+    "developerName": "Osoria Tech",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": "Use $oso-code-codex:plan to plan a substantial change."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "oso-code-codex",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "engines": { "node": ">=22.18.0" },
+  "bin": { "oso-codex": "bin/oso-codex" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/build.mjs --check",
+    "test": "node --experimental-strip-types --test test/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "validate": "npm run typecheck && npm test && npm run check"
+  },
+  "devDependencies": {
+    "@types/node": "26.3.0",
+    "esbuild": "0.28.2",
+    "typescript": "7.0.2"
+  }
+}

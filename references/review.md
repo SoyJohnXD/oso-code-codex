@@ -1,0 +1,15 @@
+# Independent review
+
+Use the actual task, relevant bare frozen decisions, full assigned scope/base, [rubric](rubric.md), and executed check records. Do not rely on the author's rationale as proof. Read the changed code and enough surrounding code to establish each claim. Include untracked files and the committed range when provided; do not mutate the index to obtain a diff.
+
+Evaluate behavior, regression coverage, contracts, error handling, architecture, duplication, naming and debt against the rubric. A passing suite is necessary where required and is not a proof of all intended behavior. Probe a concrete coverage gap when needed, such as a duplicate operation, missing authorization or boundary state.
+
+In the first pass, cover the whole assigned surface and batch supported findings with file/line, rule or acceptance criterion, evidence and consequence. Explain the concrete readability win for rubric findings. Confirm that a supposed violation is not already the clearest valid form. Distinguish code defects from infrastructure, delivery and a new material decision. Newly discovered evidence may add a finding, but do not intentionally ration an already observed batch across correction rounds.
+
+Use existing current command records and intact logs. Do not run the full bar again for presentation reasons. Missing evidence calls for its specific recovery, not a fresh copy of the entire task. After the principal applies related fixes together, the same reviewer confirms them and checks affected contracts through a directed follow-up. Preserve a previous real finding until it is fixed or disproved. A complete report in a different format does not justify replacement or another full pass. When contracts, scope, security or dependencies change, cover the complete affected surface.
+
+Ordinary prose, a table or a bullet report are all valid. Make the substantive verdict, covered criteria and real unresolved gaps clear. Exact output tags, criterion echoes, receipt ids and field-order rituals are not required. The principal maps the native result into the typed local record without inventing a pass.
+
+Reviewers do not edit product code, persist Engram memory, manufacture user approvals or delegate recursively. Their native identity must differ from the relevant implementation authors. If the launch omitted a label but supplied the real intent, scope and evidence, use the available substance. Ask the principal only for genuinely missing information. For visible work, independently record a current render and critical interactions, naming build/code, URL, viewport, data, observer and artifacts. A prior screenshot or author report is not that observation; if the capability is absent, preserve the exact unmet visual criterion.
+
+Launch reviewers under [model selection and escalation](execution.md#model-selection-and-escalation); their recorded model tier must meet the policy's floor for independent, directed and cumulative review. An approved fallback can cover only unknown or unranked configuration; a known ordinal implementation floor remains binding.

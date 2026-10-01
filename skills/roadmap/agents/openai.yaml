@@ -1,0 +1,5 @@
+interface:
+  display_name: "OsoCode roadmap"
+  short_description: "Use the OsoCode roadmap workflow in Codex"
+policy:
+  allow_implicit_invocation: false
