@@ -180,7 +180,7 @@ function completedIntegration(project: string, sourceRun: string): ExternalContr
 function completedRenameIntegration(project: string, sourceRun: string): ExternalContribution {
   const before = checkoutState(project);
   captureCommand(['git', 'mv', 'README.md', 'GUIDE.md'], project);
-  captureCommand(['git', 'commit', '-qm', 'rename reviewed documentation'], project);
+  captureCommand(['git', '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.test', 'commit', '-qm', 'rename reviewed documentation'], project);
   const after = checkoutState(project);
   const commit = captureCommand(['git', 'rev-parse', 'HEAD'], project).trim();
   return { sourceRun, sourceSpecDigest: 'b'.repeat(64), reviewedCheckpoints: ['documentation'], commits: [commit], before, after, recordedAt: new Date().toISOString() };
